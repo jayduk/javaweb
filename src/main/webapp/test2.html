@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多图片上传示例</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>上传多个图片</h3>
+        <form action="#" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="images">选择图片:</label>
+                <input type="file" id="images" name="images[]" multiple>
+                <p class="help-block">可以选择多个图片文件.</p>
+            </div>
+            <div id="image-preview" style="display: flex; flex-direction: column;"></div>
+            <button type="submit" class="btn btn-primary">上传</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 当选择文件发生变化时触发事件
+            $("#images").change(function () {
+                // 清空之前的预览
+                $("#image-preview").empty();
+
+                // 获取选择的文件列表
+                var files = this.files;
+
+                // 遍历文件列表
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+
+                    // 创建 FileReader 对象
+                    var reader = new FileReader();
+
+                    // 读取文件内容
+                    reader.onload = function (e) {
+                        // 创建预览图元素
+                        var image = $("<img>").addClass("preview-image");
+
+                        // 设置预览图的 src 属性为读取的文件内容
+                        image.attr("src", e.target.result);
+
+                        // 将预览图添加到预览区域
+                        $("#image-preview").append(image);
+                    }
+
+                    // 读取文件
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

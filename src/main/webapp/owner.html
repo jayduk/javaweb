@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商家</title>
+
+    <link href="lib/bs_3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="lib/jquery/jquery_1.11.3.min.js"></script>
+    <script src="lib/bs_3.3.5/js/bootstrap.js"></script>
+
+    <script src="lib/axios/min.js"></script>
+
+    <script src="owner.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default " style="background-color: transparent; border: 0px; ">
+            <div class="container">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="true" class="navbar-toggle" data-target="#navbar"
+                        data-toggle="collapse" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">以物易物平台</a>
+                </div>
+
+                <div aria-expanded="true" class="navbar-collapse collapse in" id="navbar">
+                    <!-- left -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">主页</a></li>
+                        <li><a href="owner.html">商家</a></li>
+                        <li><a href="manage.html">管理</a></li>
+
+                    </ul>
+                    <!-- right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="collect.html">我的收藏</a>
+                        </li>
+                        <li>
+                            <a href="infomation.html">
+                                我的消息
+                                <span class="badge">0</span>
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="login.html" id="user-dropdown" role="button">
+                                <img class="img-circle mr-2" src="assets/img/av.png" width="20">
+                                <span class="align-middle" id="user-nickname">未登录</span>
+                            </a>
+
+                            <ul class="dropdown-menu" style="z-index: 1111;">
+                                <li><a href="collect.html"> 收藏 </a></li>
+                                <li><a href="order.html">订单</a></li>
+
+                                <li class="divider" role="separator"></li>
+
+                                <li><a id="sign-out" href="index.html">登出</a></li>
+                                <li><a id="logout" href="index.html">注销</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        <h2>我的商品</h2>
+        <button class="btn btn-primary" id="new_good" data-toggle="modal" data-target="#myModal">上架新商品</button>
+
+        <!-- 弹出窗口 -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">新物品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="jav/add_good" method="post" enctype="multipart/form-data">
+                            <input type="password" style="display: none;" name="type" id="add_good_type">
+                            <input type="password" style="display: none;" name="good_id" id="good_id">
+                            <input type="password" style="display: none;" name="id" id="host_id">
+                            <div class="form-group">
+                                <label for="title">标题:</label>
+                                <input type="text" class="form-control " id="title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">详细信息:</label>
+                                <input type="text" class="form-control " id="description" name="description">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">出价:</label>
+                                <input type="text" class="form-control " id="price" name="price">
+                            </div>
+                            <div class="form-group">
+                                <label for="title_img">首页标题:</label>
+                                <input type="file" class="form-control " id="title_img" name="title_img">
+                                <div id="title-img-preview" style="display: flex; flex-direction: column;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="images">详细信息:</label>
+                                <input type="file" id="images" name="images[]" multiple>
+                                <p class="help-block">可以选择多个图片文件.</p>
+
+                            </div>
+                            <div id="image-preview" style="display: flex; flex-direction: column;"></div>
+                            <button type="submit" id="good-submit" class="btn btn-primary">上传</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table" id="goods-list">
+            <tr>
+                <th>商品标题</th>
+                <th>商品描述</th>
+                <th>价格</th>
+            </tr>
+            <!-- <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button class="btn btn-xs btn-success">查看商品主页</button>
+                    <button class="btn btn-xs btn-success">编辑</button>
+                    <button class="btn btn-xs btn-success">下架</button>
+                </td>
+            </tr> -->
+        </table>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            // 当选择文件发生变化时触发事件
+            $("#images").change(function () {
+                // 清空之前的预览
+                $("#image-preview").empty();
+
+                // 获取选择的文件列表
+                var files = this.files;
+
+                // 遍历文件列表
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+
+                    // 创建 FileReader 对象
+                    var reader = new FileReader();
+
+                    // 读取文件内容
+                    reader.onload = function (e) {
+                        // 创建预览图元素
+                        var image = $("<img>").addClass("preview-image");
+
+                        // 设置预览图的 src 属性为读取的文件内容
+                        image.attr("src", e.target.result);
+
+                        // 将预览图添加到预览区域
+                        $("#image-preview").append(image);
+                    }
+
+                    // 读取文件
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $("#title_img").change(function () {
+                // 清空之前的预览
+                $("#title-img-preview").empty();
+
+                // 获取选择的文件列表
+                var files = this.files;
+
+                // 遍历文件列表
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+
+                    // 创建 FileReader 对象
+                    var reader = new FileReader();
+
+                    // 读取文件内容
+                    reader.onload = function (e) {
+                        // 创建预览图元素
+                        var image = $("<img>").addClass("preview-image");
+
+                        // 设置预览图的 src 属性为读取的文件内容
+                        image.attr("src", e.target.result);
+
+                        // 将预览图添加到预览区域
+                        $("#title-img-preview").append(image);
+                    }
+
+                    // 读取文件
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

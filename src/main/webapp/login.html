@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <link rel="stylesheet" href="lib/bs_3.3.5/css/bootstrap.css">
+    <script src="lib/jquery/jquery_1.11.3.min.js"></script>
+    <script src="lib/axios/min.js"></script>
+    <script src="lib/jquery/jquery.form_4.0.3.js"></script>
+    <script src="login.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div style="width: 300px; margin: auto ;">
+
+            <h3 style="text-align: center; margin-bottom: 50px;">登录</h3>
+
+            <form action="/jav/login" role="form" method="post" id="login-form" onsubmit="return login_check()">
+                <div style="margin-bottom: 5px;">
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-user" id="username-addon"
+                            style="position: 0; top: 0px;"></span>
+                        <input type="text" class="form-control" placeholder="请输入用户名" name="username" id="username"
+                            aria-describedby="username-addon">
+                    </div>
+                    <small class="help-block" style="visibility:hidden; margin-top: 0;" id="username-err">
+                        no longer than 16 characters
+                    </small>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="password-addon" style="position: 0; top: 0px;">
+                            <span class=" glyphicon glyphicon-lock"></span>
+                        </span>
+                        <input type="password" class="form-control " placeholder="请输入密码" name="password" id="password"
+                            aria-describedby="password-addon ">
+                    </div>
+                    <small class="help-block" style="visibility:hidden; margin-top: 0;">
+                        no longer than 16 characters
+                    </small>
+                </div>
+
+                <div style=" margin-bottom: 20px;">
+                    <a href="registry.html">没有账号?转到注册</a>
+                    <a href="index.html" style="float: right;">返回主页</a>
+                </div>
+
+                <button type="submit" class="btn btn-block" style="background-color: #1890FF; color:white">登录</button>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

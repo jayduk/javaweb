@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情页</title>
+
+    <link rel="stylesheet" href="lib/bs_3.3.5/css/bootstrap.css">
+    <script src="lib/jquery/jquery_1.11.3.min.js"></script>
+    <script src="lib/bs_3.3.5/js/bootstrap.js"></script>
+
+    <script src="lib/axios/min.js"></script>
+    <script src="good.js"></script>
+    <style>
+        .splitter {
+            flex: 1 0 auto;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .product-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            color: #ff0000;
+            margin-bottom: 20px;
+        }
+
+        .product-buttons {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default " style="background-color: transparent; border: 0px; ">
+            <div class="container">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="true" class="navbar-toggle" data-target="#navbar"
+                        data-toggle="collapse" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">以物易物平台</a>
+                </div>
+
+                <div aria-expanded="true" class="navbar-collapse collapse in" id="navbar">
+                    <!-- left -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">主页</a></li>
+                        <li><a href="owner.html">商家</a></li>
+                        <li><a href="manage.html">管理</a></li>
+
+                    </ul>
+                    <!-- right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="collect.html">我的收藏</a>
+                        </li>
+                        <li>
+                            <a href="infomation.html">
+                                我的消息
+                                <span class="badge">0</span>
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="login.html" id="user-dropdown" role="button">
+                                <img class="img-circle mr-2" src="assets/img/av.png" width="20">
+                                <span class="align-middle" id="user-nickname">未登录</span>
+                            </a>
+
+                            <ul class="dropdown-menu" style="z-index: 1111;">
+                                <li><a href="collect.html"> 收藏 </a></li>
+                                <li><a href="order.html">订单</a></li>
+
+                                <li class="divider" role="separator"></li>
+
+                                <li><a id="sign-out" href="index.html">登出</a></li>
+                                <li><a id="logout" href="index.html">注销</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        <div>
+            <h2 class="align-middle" id="user-nickname" style="display: flex; flex-direction: row;">
+                <img id="owner-img" class="img-circle mr-2" src="assets/img/av.png" width="50px"
+                    style="margin-right: 20px;">
+                <div id="owner-nickname" style="align-self: center;">
+                    未登录
+                </div>
+            </h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <img src="assets/img/display1.jpg" id="good-title-img" class="product-image">
+            </div>
+            <div class="col-md-7" style="display: flex; flex-direction: column;">
+                <h2 class="product-title" id="good-title">商品标题</h2>
+                <p class="product-description" id="good-description">商品描述 </p>
+                <p class="product-price" id="good-price">价格: $99.99</p>
+                <div class="splitter"></div>
+                <div class="product-buttons">
+                    <button id="collect-btn" class="btn btn-success" style="margin-right: 20px;">收藏</button>
+                    <button id="buy-btn" class="btn btn-success">协商购买</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 30px;"></div>
+        <div style="display: flex; flex-direction: row;">
+            <div style="height: 2px;width: 100%; background-color: black;"></div>
+            <h1>详情</h1>
+            <div style="height: 2px;width: 100%;  background-color: black;"></div>
+        </div>
+
+        <div id="good-show-container" style="display: flex; flex-direction: column;">
+
+        </div>
+    </div>
+</body>
+
+</html>
